@@ -1,0 +1,5 @@
+try-import .bazelrc-base
+
+startup --host_jvm_args=-Xmx2048m
+startup --host_jvm_args=-Xms1024m
+build --local_resources 2048,.5,1.0
