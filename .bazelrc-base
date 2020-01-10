@@ -1,5 +1,6 @@
 build --verbose_failures
-build --strategy=Scalac=worker --strategy=ScroogeRule=worker --worker_max_instances=8
+build --strategy=Scalac=worker --strategy=ScroogeRule=worker
+build --worker_sandboxing
 build --disk_cache=.bazel_cache
 build --ram_utilization_factor=80
 build --symlink_prefix=.bazel/

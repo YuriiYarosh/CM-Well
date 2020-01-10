@@ -1,4 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("//deps.bzl", "java_deps", "jena_deps")
 
 ## Maven Dependencies ##
 
@@ -13,7 +14,8 @@ http_archive(
     sha256 = rules_jvm_external_version_sha256,
 )
 
-load("@rules_jvm_external//:defs.bzl", "maven_install")
+load("@rules_jvm_external//:defs.bzl", "maven_install", "artifact")
+load("@rules_jvm_external//:specs.bzl", "maven")
 
 ## Scala ##
 
@@ -29,10 +31,16 @@ http_archive(
 )
 
 load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
-scala_register_toolchains()
+scala_register_toolchains("//:cm_well_scala_toolchain")
 
 load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
-scala_repositories()
+scala_repositories((
+    "2.12.10", {
+       "scala_compiler": "cedc3b9c39d215a9a3ffc0cc75a1d784b51e9edc7f13051a1b4ad5ae22cfbc0c",
+       "scala_library": "0a57044d10895f8d3dd66ad4286891f607169d948845ac51e17b4c1cf0ab569d",
+       "scala_reflect": "56b609e1bab9144fb51525bfa01ccd72028154fc40a58685a1e9adcbe7835730"
+    }
+))
 
 ## Protobuf ##
 
@@ -61,3 +69,27 @@ http_archive(
 )
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 bazel_skylib_workspace()
+
+## Project dependencies
+
+maven_install(
+    artifacts = [
+        # maven.artifact(
+        #     group = "", artifact = "", version = "",
+        #     exclusions = []
+        # ),
+    ],
+    maven_install_json = "//:maven_install.json",
+    repositories = [
+        "https://maven.google.com",
+        "https://jcenter.bintray.com/",
+        "https://repo1.maven.org/maven2",
+    ],
+    fetch_sources = True,
+    fail_on_missing_checksum = True,
+    version_conflict_policy = "pinned",
+    strict_visibility = True
+)
+
+load("@maven//:defs.bzl", "pinned_maven_install")
+pinned_maven_install()
