@@ -1,0 +1,341 @@
+openapi: 3.0.2
+info:
+  title: CM-Well API
+  description: [CM-Well](https://cm-well.github.io/CM-Well/index.html) API spec
+  version: 1.5.169-ATOM
+
+servers:
+  - url: {protocol}://{addr}:{port}/{basePath}
+    description: CM-Well Server
+    variables:
+      port:
+        enum:
+          - '9000'
+        default: '9000'
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+      addr:
+        enum:
+          - localhost
+          - api.example.com
+        default: localhost
+      basePath:
+        default: ""
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+
+security:
+  - BasicAuth: []
+
+paths:
+
+  /sys123/{file:*}:
+    $ref: ./paths/static.yaml
+
+  /_*page:
+    $ref: ./paths/help.yaml
+
+  /_null:
+    $ref: ./paths/null.yaml
+
+  /_backpressure:
+    $ref: ./paths/backpressure.yaml
+
+  /_traffic:
+    $ref: ./paths/traffic.yaml
+
+  /_timeout:
+    $ref: ./paths/traffic-timeout.yaml
+
+  /_types-cache:
+    $ref: ./paths/typescache.yaml
+
+  /_ns-cache:
+    $ref: ./paths/nscache.yaml
+
+  /_services-cache:
+    $ref: ./paths/servicecache.yaml
+
+  /_login:
+    $ref: ./paths/login.yaml
+
+  /_auth: #
+    $ref: ./paths/auth.yaml
+
+  /_hcn:
+    $ref: ./paths/poisonpill.yaml
+
+  /_cas/{raw:*}:
+    $ref: ./paths/cassandra.yaml
+
+  /_es/{uuid}:
+    $ref: ./paths/elastic-uuid.yaml
+
+  /_es/{index}/{uuid}:
+    $ref: ./paths/elastic-index-uuid.yaml
+
+  /_ll:
+    $ref: ./paths/log-level.yaml
+
+  /_consume: #
+    $ref: ./paths/consume.yaml
+
+  /_bulk-consume:
+    $ref: ./paths/consume-bulk.yaml
+
+  /_iterate:
+    $ref: ./paths/iterate.yaml
+
+  /_cssh:
+    $ref: ./paths/cssh.yaml
+
+  /_csshx:
+    $ref: ./paths/csshx.yaml
+
+  /_kafka/{topic}/{partition}:
+    $ref: ./paths/kafka-topic-partition.yaml
+
+  /_stp/{agent:*}:
+    $ref: ./paths/stp.yaml
+
+  /_track/{tid:*}:
+    $ref: ./paths/track.yaml
+
+  /monitor/requests/{path:*}:
+    $ref: ./paths/monitor.yaml
+
+  /monitor/start:
+    $ref: ./paths/monitor-start.yaml
+
+  /monitor/stop:
+    $ref: ./paths/monitor-stop.yaml
+
+
+  /health:
+    $ref: ./paths/health.yaml
+
+  /health/cas:
+    $ref: ./paths/health-cassandra.yaml
+
+  /health/cas_cfh:
+    $ref: ./paths/health-cassandra-histogram.yaml
+
+  /health/es:
+    $ref: ./paths/health-elasticsearch.yaml
+
+  /health/es_top:
+    $ref: ./paths/health-elasticsearch-top.yaml
+
+  /health/es_stats:
+    $ref: ./paths/health-elasticsearch-stats.yaml
+
+  /health/es_seg:
+    $ref: ./paths/health-elasticsearch-seg.yaml
+
+  /health/es_status:
+    $ref: ./paths/health-elasticsearch-status.yaml
+
+  /health/es_thread_pool:
+    $ref: ./paths/health-elasticsearch-threadpool.yaml
+
+  /health/kafka:
+    $ref: ./paths/health-kafka.yaml
+
+  /health/zk-stat:
+    $ref: ./paths/health-zookeeper-stats.yaml
+
+  /health/zk-ruok:
+    $ref: ./paths/health-zookeeper-ruok.yaml
+
+  /health/zk-mntr:
+    $ref: ./paths/health-zookeeper-mntr.yaml
+
+  /health/ws:
+    $ref: ./paths/health-ws.yaml
+
+  /ws/_out:
+    $ref: ./paths/websock.yaml
+
+  /ii/{uuid:*}:
+    $ref: ./paths/getbyuuid.yaml
+
+  /zz:
+    $ref: ./paths/zz.yaml
+
+  /zz/{key:*}:
+    $ref: ./paths/zz-key.yaml
+
+  /proc:
+    $ref: ./paths/proc.yaml
+
+  /proc/{path:*}:
+    $ref: ./paths/proc-raw.yaml
+
+  /meta/quad/Y213ZWxsOi8vbWV0YS9zeXMjcGFydGl0aW9u{base64:*}:
+    $ref: ./paths/metaquad.yaml
+
+  /_in:
+    $ref: ./paths/in.yaml
+
+  /_out:
+    $ref: ./paths/out.yaml
+
+  /_ow:
+    $ref: ./paths/ow.yaml
+
+  /_cmd:
+    $ref: ./paths/cmd.yaml
+
+  /_sp:
+    $ref: ./paths/sp.yaml
+
+  /_sp/{fomat:*}:
+    $ref: ./paths/sp-formatted.yaml
+
+  /_sparql:
+    $ref: ./paths/sparql.yaml
+
+  /_ssparql:
+    $ref: ./paths/sparql-search.yaml
+
+  /{path:*}:
+    get:
+      summary: Execute a CM-Well operation or read data, alias for the respecrive /_op/* endpoints
+      parameters:
+        - in: query
+          name: op
+          schema:
+            type: string
+            enum: [
+              search,
+              read,
+              aggregate,
+              stats,
+              create-iterator,
+              next-chunk,
+              create-consumer,
+              consume,
+              subscribe,
+              unsubscribe,
+              pull,
+              stream,
+              mstream,
+              sstream,
+              qstream,
+              bulk-consume,
+              x-fix,
+              x-info,
+              x-verify,
+              purge-all,
+              purge-last,
+              rollback,
+              purge-history
+            ]
+            default: read
+          required: true
+
+          description: CM-Well operation type, aliases for GET /_op/*
+
+      responses:
+        '200':
+          description: A list of users
+        '400':
+          description: A list of users
+
+    post:
+      summary: Put infoton, create consumer or perform search
+      requestBody:
+        description: Data to ingest
+        content:
+          application/json:
+            schema:
+              type: string
+          application/rdf+xml:
+            schema:
+              type: string
+          application/x-www-form-urlencoded:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Success
+
+  # Operations
+
+  /_op/search:
+    $ref: ./paths/operations/search.yaml
+
+  /_op/read:
+    $ref: ./paths/operations/read.yaml
+
+  /_op/aggregate:
+    $ref: ./paths/operations/aggregate.yaml
+
+  /_op/stats: # alias for aggregate
+    $ref: ./paths/operations/aggregate.yaml
+
+  /_op/create-iterator:
+    $ref: ./paths/operations/iterator-create.yaml
+
+  /_op/next-chunk:
+    $ref: ./paths/operations/scroll.yaml
+
+  /_op/create-consumer:
+    $ref: ./paths/operations/consumer-create.yaml
+
+  /_op/consume:
+    $ref: ./paths/operations/consume.yaml
+
+  /_op/subscribe:
+    $ref: ./paths/operations/subscribe.yaml
+
+  /_op/unsubscribe:
+    $ref: ./paths/operations/unsubscribe.yaml
+
+  /_op/pull:
+    $ref: ./paths/operations/pull.yaml
+
+  /_op/stream:
+    $ref: ./paths/operations/stream.yaml
+
+  /_op/mstream:
+    $ref: ./paths/operations/stream-multi.yaml
+
+  /_op/sstream:
+    $ref: ./paths/operations/stream-super.yaml
+
+  /_op/qstream:
+    $ref: ./paths/operations/stream-queue.yaml
+
+  /_op/bulk-consume:
+    $ref: ./paths/operations/consume-bulk.yaml
+
+  /_op/x-fix:
+    $ref: ./paths/operations/x-fix.yaml
+
+  /_op/x-info:
+    $ref: ./paths/operations/x-info.yaml
+
+  /_op/x-verify:
+    $ref: ./paths/operations/x-verify.yaml
+
+  /_op/purge-all:
+    $ref: ./paths/operations/purge-all.yaml
+
+  /_op/purge-last:
+    $ref: ./paths/operations/purge-last.yaml
+
+  /_op/rollback:
+    $ref: ./paths/operations/rollback.yaml
+
+  /_op/purge-history:
+    $ref: ./paths/operations/purge-history.yaml
+
+
