@@ -6,6 +6,8 @@ kafka_version = ""
 zookeeper_version = ""
 play_version = ""
 
+gremlin_version = "2.6.0"
+
 java_deps = [
     "ch.qos.logback:logback-classic:1.2.3",
     "com.datastax.cassandra:cassandra-driver-core:3.7.1",
@@ -17,8 +19,8 @@ java_deps = [
     "com.google.guava:guava:28.1-jre",
     "com.ning:async-http-client:1.9.40",
     "com.spatial4j:spatial4j:0.5",
-    "com.tinkerpop.blueprints:blueprints-core:2.6.0",
-    "com.tinkerpop.gremlin:gremlin-groovy:2.6.0",
+    "com.tinkerpop.blueprints:blueprints-core:{}" % gremlin_version,
+    "com.tinkerpop.gremlin:gremlin-groovy:{}" % gremlin_version,
     "com.thaiopensource:jing:20091111",
     "com.typesafe:config:1.4.0",
     "commons-io:commons-io:2.6",
@@ -73,13 +75,17 @@ java_deps = [
     "io.dropwizard.metrics:metrics-core:4.1.1",
 ]
 
+circe_version = "0.12.2"
+metrics4_version = "4.1.1"
+bytecompressor_version = "1.2.2"
+
 scala_deps = [
     # "com.whisk" %% art % "0.9.7",
     "com.github.t3hnar:scala-bcrypt:4.1",
-    "com.avast:bytecompressor:1.2.2",
-    "com.avast:bytecompressor-huffman:1.2.2",
-    "com.avast:bytecompressor-jsnappy:1.2.2",
-    "com.avast:bytecompressor-zlib:1.2.2",
+    "com.avast:bytecompressor:{}" % bytecompressor_version,
+    "com.avast:bytecompressor-huffman:{}" % bytecompressor_version,
+    "com.avast:bytecompressor-jsnappy:{}" % bytecompressor_version,
+    "com.avast:bytecompressor-zlib:{}" % bytecompressor_version,
     "com.dimafeng:testcontainers-scala:0.33.0",
     "com.lihaoyi:ujson:0.8.0",
     "com.pauldijou:jwt-core:4.1.0",
@@ -94,13 +100,13 @@ scala_deps = [
     "com.typesafe.play:play:{}" % play_version,
     "com.twitter:chill-akka:0.5.2",
     "eu.piotrbuda:scalawebsocket:0.1.1",
-    "io.circe:circe-core:0.12.2",
-    "io.circe:circe-generic:0.12.2",
-    "io.circe:circe-parser:0.12.2",
+    "io.circe:circe-core:{}" % circe_version,
+    "io.circe:circe-generic:{}" % circe_version,
+    "io.circe:circe-parser:{}" % circe_version,
     "net.jcazevedo:moultingyaml:0.4.1",
-    "nl.grons:metrics4-scala:4.1.1",
-    "nl.grons:metrics4-akka_a25:4.1.1",
-    "nl.grons:metrics4-scala-hdr:4.1.1",
+    "nl.grons:metrics4-scala:{}" % metrics4_version,
+    "nl.grons:metrics4-akka_a25:{}" % metrics4_version,
+    "nl.grons:metrics4-scala-hdr:{}" % metrics4_version,
     "org.rogach:scallop:3.3.1",
     "org.scalacheck:scalacheck:1.14.2",
     "org.scalatest:scalatest:3.0.8",
@@ -108,7 +114,8 @@ scala_deps = [
     "org.scala-lang.modules:scala-xml:1.2.0",
     "nl.gn0s1s:bump:0.1.3",
     "org.apache.kafka:kafka" % kafka_version,
-    "org.scala-lang:scala-library:{}" % scala_version
+    "org.scala-lang:scala-library:{}" % scala_version,
+    "org.scala-lang.modules:scala-collection-compat:2.1.3"
 ]
 
 jena_deps = [
