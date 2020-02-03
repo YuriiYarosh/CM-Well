@@ -6,6 +6,8 @@
 *.class
 *.log
 
+out/
+
 #cmwell specific
 .credentials
 server/cmwell-cons/app/components/
