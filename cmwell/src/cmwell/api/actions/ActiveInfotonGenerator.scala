@@ -22,7 +22,7 @@ import cmwell.ctrl.client.CtrlClient
 import cmwell.domain._
 import cmwell.fts.FieldFilter
 import cmwell.util.FullBox
-import cmwell.util.build.BuildInfo
+import cmwell.build.BuildInfo
 import cmwell.util.os.Props
 import cmwell.util.string.Hash.crc32
 import cmwell.web.ld.cmw.CMWellRDFHelper
@@ -74,15 +74,7 @@ class ActiveInfotonGenerator @Inject()(
         "pbp" -> Set(FString(backPressureToggler.get)),
         "cm-well_release" -> Set(FString(BuildInfo.release)),
         "cm-well_version" -> Set(FString(BuildInfo.version)),
-        "git_commit_version" -> Set(FString(BuildInfo.gitCommitVersion)),
         "scala_version" -> Set(FString(BuildInfo.scalaVersion)),
-        "sbt_version" -> Set(FString(BuildInfo.sbtVersion)),
-        "cassandra_version" -> Set(FString(BuildInfo.cassandraVersion)),
-        "elasticsearch_version" -> Set(FString(BuildInfo.elasticsearchVersion)),
-        //        "es_cluster_name" -> Set(FString(cmwell.fts.Settings.clusterName)),
-        "build_machine" -> Set(FString(BuildInfo.buildMachine)),
-        "build_time" -> Set(FDate(BuildInfo.buildTime)),
-        "encoding_version" -> Set(FString(BuildInfo.encodingVersion)),
         "java_runtime_name" -> Set(
           FString(System.getProperty("java.runtime.name"))
         ),

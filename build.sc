@@ -120,9 +120,19 @@ object cmwell extends ScalaModule with ScalafmtModule {
     ivy"com.typesafe.akka::akka-stream-contrib:0.10",
     ivy"com.typesafe.akka::akka-http:10.1.10",
     ivy"com.typesafe.akka::akka-actor:2.5.26",
+
+    ivy"com.typesafe.akka::akka-cluster:${Versions.akka}",
+    ivy"com.typesafe.akka::akka-cluster-metrics:${Versions.akka}",
+    ivy"com.typesafe.akka::akka-cluster-tools:${Versions.akka}",
+
+    ivy"com.typesafe.play::play:${Versions.play}",
+    ivy"com.typesafe.play::play-ws:${Versions.play}",
+    ivy"com.typesafe.play::filters-helpers:${Versions.play}",
+
     ivy"com.typesafe.play::twirl-api:1.5.0",
     ivy"com.typesafe.play::play-json:${Versions.play}",
     ivy"com.typesafe.play::play:${Versions.play}",
+
     // ivy"eu.piotrbuda:scalawebsocket:0.1.1",
     ivy"io.circe::circe-core:${Versions.circe}",
     ivy"io.circe::circe-generic:${Versions.circe}",

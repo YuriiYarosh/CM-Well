@@ -18,7 +18,6 @@ import cmwell.fts.{FieldFilter, MultiFieldFilter, SingleFieldFilter}
 import cmwell.ws.Settings
 import cmwell.ws.qp.Encoder
 import cmwell.util.collections._
-import org.apache.poi.hssf.record.cf.Threshold
 import wsutil._
 import scala.util.Try
 import scala.language.reflectiveCalls
