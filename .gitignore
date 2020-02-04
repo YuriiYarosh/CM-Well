@@ -1,6 +1,7 @@
 # idea stuff
 *.iml
 .idea/
+.idea_modules/
 
 # scala staff
 *.class

@@ -82,10 +82,6 @@ bytecompressor_version = "1.2.2"
 scala_deps = [
     # "com.whisk" %% art % "0.9.7",
     "com.github.t3hnar:scala-bcrypt:4.1",
-    "com.avast:bytecompressor:{}" % bytecompressor_version,
-    "com.avast:bytecompressor-huffman:{}" % bytecompressor_version,
-    "com.avast:bytecompressor-jsnappy:{}" % bytecompressor_version,
-    "com.avast:bytecompressor-zlib:{}" % bytecompressor_version,
     "com.dimafeng:testcontainers-scala:0.33.0",
     "com.lihaoyi:ujson:0.8.0",
     "com.pauldijou:jwt-core:4.1.0",
